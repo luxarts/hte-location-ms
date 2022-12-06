@@ -5,10 +5,10 @@ import (
 	"log"
 )
 
-func main(){
+func main() {
 	r := router.New()
 
-	if err := r.Run(); err != nil {
+	if err := r.Run("localhost:8000"); err != nil {
 		log.Fatalln(err)
 	}
 }
