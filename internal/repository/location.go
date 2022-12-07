@@ -6,7 +6,7 @@ import (
 )
 
 type LocationRepository interface {
-	Create(p *domain.Payload)
+	Create(p *domain.Location)
 }
 
 type locationRepository struct {
@@ -16,6 +16,6 @@ func NewLocationRepository() LocationRepository {
 	return &locationRepository{}
 }
 
-func (r *locationRepository) Create(p *domain.Payload) {
+func (r *locationRepository) Create(p *domain.Location) {
 	log.Println(p)
 }

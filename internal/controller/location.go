@@ -20,7 +20,7 @@ func NewLocationController(svc service.LocationService) LocationController {
 }
 
 func (c *locationController) Create(ctx *gin.Context) {
-	var p domain.Payload
+	var p domain.Location
 	if !p.IsValid() {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid payload"})
 		return
