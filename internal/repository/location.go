@@ -17,6 +17,5 @@ func NewLocationRepository() LocationRepository {
 }
 
 func (r *locationRepository) Create(location domain.Payload) {
-	log.Println("Location creado")
 	log.Println(location)
 }
