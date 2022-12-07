@@ -6,7 +6,7 @@ import (
 )
 
 type LocationService interface {
-	Create(location domain.Payload) domain.Payload
+	Create(p *domain.Payload) *domain.Payload
 }
 
 type locationService struct {
@@ -17,7 +17,7 @@ func NewLocationService(repo repository.LocationRepository) LocationService {
 	return &locationService{repo: repo}
 }
 
-func (r *locationService) Create(location domain.Payload) domain.Payload {
-	r.repo.Create(location)
-	return location
+func (r *locationService) Create(p *domain.Payload) *domain.Payload {
+	r.repo.Create(p)
+	return p
 }
