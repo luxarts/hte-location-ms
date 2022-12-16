@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"go-rest-template/internal/domain"
+	"hte-location-ms/internal/domain"
 	"log"
 )
 

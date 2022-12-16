@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"go-rest-template/internal/domain"
-	"go-rest-template/internal/service"
+	"hte-location-ms/internal/domain"
+	"hte-location-ms/internal/service"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

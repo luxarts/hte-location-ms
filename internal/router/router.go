@@ -1,14 +1,14 @@
 package router
 
 import (
-	"go-rest-template/internal/controller"
-	"go-rest-template/internal/defines"
-	"go-rest-template/internal/repository"
-	"go-rest-template/internal/service"
+	"github.com/luxarts/jsend-go"
+	"hte-location-ms/internal/controller"
+	"hte-location-ms/internal/defines"
+	"hte-location-ms/internal/repository"
+	"hte-location-ms/internal/service"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/luxarts/jsend-go"
 )
 
 func New() *gin.Engine {

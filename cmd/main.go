@@ -1,7 +1,7 @@
 package main
 
 import (
-	"go-rest-template/internal/router"
+	"hte-location-ms/internal/router"
 	"log"
 )
 

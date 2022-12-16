@@ -1,8 +1,8 @@
 package service
 
 import (
-	"go-rest-template/internal/domain"
-	"go-rest-template/internal/repository"
+	"hte-location-ms/internal/domain"
+	"hte-location-ms/internal/repository"
 )
 
 type LocationService interface {
