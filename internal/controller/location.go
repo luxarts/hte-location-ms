@@ -30,6 +30,10 @@ func (c *locationController) Create(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid payload"})
 		return
 	}
-	l := c.svc.Create(&p)
+	l, err := c.svc.Create(&p)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
 	ctx.JSON(http.StatusCreated, l)
 }

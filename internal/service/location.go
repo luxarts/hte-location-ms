@@ -6,7 +6,7 @@ import (
 )
 
 type LocationService interface {
-	Create(p *domain.Location) *domain.Location
+	Create(p *domain.Location) (*domain.Location, error)
 }
 
 type locationService struct {
@@ -17,7 +17,7 @@ func NewLocationService(repo repository.LocationRepository) LocationService {
 	return &locationService{repo: repo}
 }
 
-func (r *locationService) Create(p *domain.Location) *domain.Location {
-	r.repo.Create(p)
-	return p
+func (r *locationService) Create(p *domain.Location) (*domain.Location, error) {
+	err := r.repo.Create(p)
+	return p, err
 }
