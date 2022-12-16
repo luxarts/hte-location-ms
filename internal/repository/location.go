@@ -2,6 +2,7 @@ package repository
 
 import (
 	"fmt"
+	"github.com/Masterminds/squirrel"
 	"github.com/jmoiron/sqlx"
 	"hte-location-ms/internal/domain"
 	"log"
@@ -13,17 +14,41 @@ type LocationRepository interface {
 }
 
 type locationRepository struct {
-	db *sqlx.DB
+	db         *sqlx.DB
+	sqlBuilder locationsSQL
 }
 
 func NewLocationRepository(db *sqlx.DB) LocationRepository {
-	return &locationRepository{db: db}
+	return &locationRepository{
+		db: db,
+		sqlBuilder: locationsSQL{
+			table: "hte.locations",
+		},
+	}
 }
 
 func (r *locationRepository) Create(p *domain.Location) error {
 	log.Println(p)
-	tss := time.Unix(p.Timestamp, 0).Format(time.RFC3339)
-	coords := fmt.Sprintf("(%f,%f)", *p.Coordinates.Latitude, *p.Coordinates.Longitude)
-	_, err := r.db.Exec("INSERT INTO hte.locations (device_id, battery, timestamp,coordinates) VALUES ($1,$2,$3,$4)", p.DeviceID, p.Battery, tss, coords)
+	query, args, err := r.sqlBuilder.CreateSQL(p)
+	if err != nil {
+		return err
+	}
+	_, err = r.db.Exec(query, args...)
 	return err
+}
+
+type locationsSQL struct {
+	table string
+}
+
+func (s *locationsSQL) CreateSQL(l *domain.Location) (string, []interface{}, error) {
+	tss := time.Unix(l.Timestamp, 0).Format(time.RFC3339)
+	coords := fmt.Sprintf("(%f,%f)", *l.Coordinates.Latitude, *l.Coordinates.Longitude)
+	query, args, err := squirrel.Insert(s.table).
+		Columns("device_id", "battery", "timestamp", "coordinates").
+		Values(l.DeviceID, l.Battery, tss, coords).
+		PlaceholderFormat(squirrel.Dollar).
+		ToSql()
+
+	return query, args, err
 }
