@@ -3,5 +3,5 @@ package defines
 const (
 	EndpointPing = "/ping"
 
-	EndpointExample = "/example"
+	EndpointCreateLocation = "/location"
 )

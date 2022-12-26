@@ -1,13 +1,18 @@
 package router
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 	"github.com/luxarts/jsend-go"
-	"go-rest-template/internal/controller"
-	"go-rest-template/internal/defines"
-	"go-rest-template/internal/repository"
-	"go-rest-template/internal/service"
+	"hte-location-ms/internal/controller"
+	"hte-location-ms/internal/defines"
+	"hte-location-ms/internal/repository"
+	"hte-location-ms/internal/service"
+	"log"
 	"net/http"
+	"os"
 )
 
 func New() *gin.Engine {
@@ -20,18 +25,27 @@ func New() *gin.Engine {
 
 func mapRoutes(r *gin.Engine) {
 	// DB connectors, rest clients, and other stuff init
-
+	postgresURI := fmt.Sprintf("postgres://%s:%s@%s:%s/postgres?sslmode=disable",
+		os.Getenv(defines.EnvPostgresUser),
+		os.Getenv(defines.EnvPostgresPassword),
+		os.Getenv(defines.EnvPostgresHost),
+		os.Getenv(defines.EnvPostgresPort),
+	)
+	db, err := sqlx.Open("postgres", postgresURI)
+	if err != nil {
+		log.Panic(err)
+	}
 	// Repositories init
-	repo := repository.NewExampleRepository()
+	repo := repository.NewLocationRepository(db)
 
 	// Services init
-	svc := service.NewExampleService(repo)
+	svc := service.NewLocationService(repo)
 
 	// Controllers init
-	ctrl := controller.NewExampleController(svc)
+	ctrl := controller.NewLocationController(svc)
 
 	// Endpoints
-	r.GET(defines.EndpointExample, ctrl.ExampleHandler)
+	r.POST(defines.EndpointCreateLocation, ctrl.Create)
 
 	// Health check endpoint
 	r.GET(defines.EndpointPing, healthCheck)

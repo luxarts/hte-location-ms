@@ -1,11 +1,11 @@
 package main
 
 import (
-	"go-rest-template/internal/router"
+	"hte-location-ms/internal/router"
 	"log"
 )
 
-func main(){
+func main() {
 	r := router.New()
 
 	if err := r.Run(); err != nil {
