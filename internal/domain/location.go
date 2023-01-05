@@ -40,8 +40,8 @@ type LocationFilters struct {
 	DeviceID string
 	From     *time.Time
 	To       *time.Time
-	Limit    *int64
-	Offset   *int64
+	Limit    *uint64
+	Offset   *uint64
 }
 
 func (l *Location) ToEntity() *LocationEntity {

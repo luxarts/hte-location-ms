@@ -66,6 +66,18 @@ func (c *locationController) GetLocationsByDeviceID(ctx *gin.Context) {
 			filter.To = &toTs
 		}
 	}
+	if limitStr, limitExist := ctx.GetQuery("limit"); limitExist {
+		limit, err := strconv.ParseUint(limitStr, 10, 64)
+		if err == nil {
+			filter.Limit = &limit
+		}
+	}
+	if offsetStr, offsetExist := ctx.GetQuery("offset"); offsetExist {
+		offset, err := strconv.ParseUint(offsetStr, 10, 64)
+		if err == nil {
+			filter.Offset = &offset
+		}
+	}
 
 	resp, err := c.svc.GetLocationsByDeviceID(id, &filter)
 	if err != nil {

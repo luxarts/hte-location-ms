@@ -90,9 +90,12 @@ func (s *locationsSQL) GetLocationsByDeviceIDSQL(id int64, filter *domain.Locati
 	if filter.To != nil {
 		and = append(and, squirrel.LtOrEq{"timestamp": filter.To.Format(time.RFC3339)})
 	}
+
 	query, args, err := squirrel.Select("*").
 		From(s.table).
 		Where(and).
+		Limit(*filter.Limit).
+		Offset(*filter.Offset).
 		PlaceholderFormat(squirrel.Dollar).
 		ToSql()
 	return query, args, err
