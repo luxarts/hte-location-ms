@@ -46,6 +46,7 @@ func mapRoutes(r *gin.Engine) {
 
 	// Endpoints
 	r.POST(defines.EndpointCreateLocation, ctrl.Create)
+	r.GET(defines.EndpointGetLocationsByDeviceID, ctrl.GetLocationsByDeviceID)
 
 	// Health check endpoint
 	r.GET(defines.EndpointPing, healthCheck)
