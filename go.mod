@@ -8,4 +8,5 @@ require (
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/lib/pq v1.10.7
 	github.com/luxarts/jsend-go v1.0.2
+	github.com/prometheus/client_golang v1.14.0
 )
